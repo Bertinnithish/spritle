@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Train ticket booking system</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<script>
+    function includeHTML() {
+      var z, i, elmnt, file, xhttp;
+      /*loop through a collection of all HTML elements:*/
+      z = document.getElementsByTagName("*");
+      for (i = 0; i < z.length; i++) {
+        elmnt = z[i];
+        /*search for elements with a certain atrribute:*/
+        file = elmnt.getAttribute("include-html");
+        if (file) {
+          /*make an HTTP request using the attribute value as the file name:*/
+          xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4) {
+              if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+              if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+              /*remove the attribute, and call this function once more:*/
+              elmnt.removeAttribute("include-html");
+              includeHTML();
+            }
+          }      
+          xhttp.open("GET", file, true);
+          xhttp.send();
+          /*exit the function:*/
+          return;
+        }
+      }
+    };
+    </script>
+<body style="background-color: azure;">
+    <div include-html="header.html"></div>
+    <button class="btn btn-primary" id="logout" style="float: right; margin-right: 20px;">
+        logout
+    </button>
+    <div class="container mt-3">
+        <div class="d-flex justify-content-center row p-3">
+            <h2 class="d-flex justify-content-center">Sign Up</h2>
+            <div class="col-md-1"></div>
+            <div class="col-md-8 p-3" style="background-color: white; margin-right: -30px;">
+                <form method="POST" role="form" action="login.html">
+                    <div style="margin-left: 180px;" class="form mt-3">
+                        <input type="email" autocomplete="off" name="InputEmail" id="InputEmail" required>
+                        <label for="InputEmail" class="label-name">
+                            <span class="content-name">Email Id</span>
+                        </label>
+                    </div><br>
+    
+                    <div style="margin-left: 180px;" class="form">
+                        <input type="password" autocomplete="off" name="InputPassword" id="InputPassword" required>
+                        <label for="InputPassword" class="label-name">
+                            <span class="content-name">Password</span>
+                        </label>
+                    </div><br>
+    
+                    <div style="margin-left: 180px;" class="form">
+                        <input type="password" autocomplete="off" name="InputConfirmpassword" id="InputConfirmpassword" onkeyup="checkPass(); return false;" required>
+                        <label for="InputConfirmpassword" class="label-name">
+                            <span class="content-name">Confirm Password</span>
+                        </label>
+                    </div><br>
+                    <div style="margin-left: 180px;">
+                        <button type="submit" class="btn btn-primary" onclick="passvalues();">Sign Up</button>
+                    </div>
+                </form> 
+            </div>
+        </div> 
+    </div>
+    <script>
+        includeHTML();
+        function passvalues()
+        {
+            var name=document.getElementById("InputEmail").value;
+            var pwd=document.getElementById("InputPassword").value;
+            localStorage.setItem("user", name);
+            localStorage.setItem("password", pwd);
+            return false;
+        }
+        
+        var logout = document.getElementById("logout");
+        logout.onclick = function(){
+          localStorage.removeItem("user");
+          localStorage.removeItem("password");
+          localStorage.removeItem("dob");
+          window.location.href = "index.html";
+        }
+
+        function checkPass()
+{
+    var pass1 = document.getElementById('InputPassword');
+    var pass2 = document.getElementById('InputConfirmpassword');
+    var message = document.getElementById('error-nwl');
+    var goodColor = "#66cc66";
+    var badColor = "#ff6666";
+
+    if(pass1.value == pass2.value){
+        pass2.style.backgroundColor = goodColor;
+        message.style.color = goodColor;
+        message.innerHTML = "ok!"
+    }
+    else{
+        pass2.style.backgroundColor = badColor;
+        message.style.color = badColor;
+        message.innerHTML = " These passwords don't match"
+    }
+	
+}  
+      </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Railway Booking System</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<script>
+    function includeHTML() {
+      var z, i, elmnt, file, xhttp;
+      /*loop through a collection of all HTML elements:*/
+      z = document.getElementsByTagName("*");
+      for (i = 0; i < z.length; i++) {
+        elmnt = z[i];
+        /*search for elements with a certain atrribute:*/
+        file = elmnt.getAttribute("include-html");
+        if (file) {
+          /*make an HTTP request using the attribute value as the file name:*/
+          xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4) {
+              if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+              if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+              /*remove the attribute, and call this function once more:*/
+              elmnt.removeAttribute("include-html");
+              includeHTML();
+            }
+          }      
+          xhttp.open("GET", file, true);
+          xhttp.send();
+          /*exit the function:*/
+          return;
+        }
+      }
+    };
+    </script>
+<body style="background-color: azure;">
+    <div include-html="header.html"></div>
+    <button class="btn btn-primary" id="logout" style="float: right; margin-right: 20px;">
+        logout
+    </button>
+    <div class="container mt-3">
+        <div class="d-flex justify-content-center row p-3">
+            <h2 class="d-flex justify-content-center">Login</h2>
+            <div class="col-md-2"></div>
+            <div class="col-md-8 p-3" style="background-color: white;">
+
+                    <div style="margin-left: 180px;" class="form mt-3">
+                        <input type="email" class="txtuser" autocomplete="off" name="InputEmail" id="InputEmail" required>
+                        <label for="InputEmail" class="label-name">
+                            <span class="content-name">Email Id</span>
+                        </label>
+                    </div><br>
+    
+                    <div style="margin-left: 180px;" class="form">
+                        <input type="password" class="txtpass" autocomplete="off" name="InputPassword" id="InputPassword" required>
+                        <label for="InputPassword" class="label-name">
+                            <span class="content-name">Password</span>
+                        </label>
+                    </div><br>
+                    <div>
+                        <button style="margin-left: 180px;" class="submit btn btn-primary">Login</button>
+                    </div>
+                    <p class="message pt-4 text-danger"></p>
+            </div>
+        </div> 
+    </div>
+    <script>
+        includeHTML();
+        let txtuser = document.querySelector(".txtuser");
+        let txtpass = document.querySelector(".txtpass");
+        let submit = document.querySelector(".submit");
+
+        if(window.localStorage)
+        {
+            let user=localStorage.getItem("user");
+            let password=localStorage.getItem("password");
+
+            let message = document.querySelector(".message");
+            submit.addEventListener("click",()=>{
+                if(user == txtuser.value && password == txtpass.value){
+                    window.location.href = "setting.html";
+                }
+                else{
+                    message.innerHTML="Error!!!";
+                }
+            }); 
+        }
+        else{
+            console.log("not Supported");
+        }
+        var logout = document.getElementById("logout");
+        logout.onclick = function(){
+          localStorage.removeItem("user");
+          localStorage.removeItem("password");
+          localStorage.removeItem("dob");
+          window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
