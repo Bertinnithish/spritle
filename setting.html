@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Example of Auto Loading Bootstrap Modal on Page Load</title>
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+    -moz-appearance: textfield;
+    }
+    td{
+      width: 50px;
+      height: 30px;
+      border: 1em;
+      text-align: center;
+    }
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 26px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+li a:hover:not(.active) {
+  color: #fff;
+  text-decoration: none;
+}
+</style>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="js/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script>
+  if(localStorage.getItem("dob") === null)
+  {
+    $(document).ready(function(){
+		$("#myModal").modal('show');
+    });
+  }
+  else{
+    $('#myModal').modal('hide');
+  }
+    
+</script>
+</head>
+<body>
+  <ul class="bg-primary">
+    <li><a href="index.html">Railway Booking System</a></li>
+    <li style="margin-right: 20px; margin-top:15px; float:right"><button  id="logout" class="btn btn-light">logout</button></li>
+  </ul>
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Agent Details</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                      <label for="dob-name" class="col-form-label">date of birth:</label>
+                      <input type="date" class="form-control" id="dob-name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phno-name" class="col-form-label">phone number:</label>
+                        <input type="number" class="form-control" id="phno-name" required>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="address-text" class="col-form-label">address:</label>
+                      <textarea class="form-control" id="address-text" required></textarea>
+                    </div>
+
+                    <div class="custom-file mt-3">
+                        <input type="file" class="custom-file-input" id="customFile" required>
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+        </form> 
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" onclick="saveprofile();">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row mt-3">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="phno-name" class="col-form-label">Compartment Capacity:</label>
+              <input type="number" class="form-control" id="compartment" required>
+            </div>
+          </div>
+
+          <div class="col-md-3 mt-3">
+            <div class="form-group mt-3">
+              <button type="submit" style="margin-top: 5px;" class="btn btn-primary" onclick="selectcompt();">Confirm</button>
+            </div>
+          </div>
+        </div>
+      <table class="table-bordered mt-3">
+        <tbody id="userdetail">
+          <script language="javascript" type="text/javascript">
+          function selectcompt()
+          {
+            var compartments=document.getElementById("compartment").value;
+            localStorage.setItem("compartment", compartments); 
+            location.reload();
+          }
+          let cmpt=localStorage.getItem("compartment");
+          document.write("<tr>");
+            compart = cmpt*6;
+          for (var a=1; a <= compart; a++) {
+            document.write("<td>"+a+"</td>");
+            if((a % 6)==0)
+            {
+              document.write("</tr><tr>")
+            }
+            }
+            document.write("</tr>");
+            </script>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="container mt-3">
+      <div class="row mt-3">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="phno-name" class="col-form-label">No. of Pasenger:</label>
+            <input type="number" class="form-control" id="pasenger" required>
+          </div>
+        </div>
+
+        <div class="col-md-3 mt-3">
+          <div class="form-group mt-3">
+            <button type="submit" style="margin-top: 5px;" class="btn btn-primary" onclick="selectpasenger();">Select</button>
+          </div>
+        </div>
+      </div>
+
+    <table class="table-bordered mt-3">
+      <thead>
+        <th style="text-align: center;">Name</th>
+        <th style="text-align: center;">Gender</th>
+        <th style="text-align: center;">Age</th>
+      </thead>
+      <tbody>
+        <script>
+          function selectpasenger()
+          {
+            var pasenger=document.getElementById("pasenger").value;
+            localStorage.setItem("pasenger-detail", pasenger); 
+            location.reload();
+          }
+          let pasenger = localStorage.getItem("pasenger-detail");
+          for (var a=1; a <= pasenger; a++) {
+                document.write("<tr>");
+                document.write("<td><input type ='text' id='name"+a+"' placeholder='Passenger "+a+" Name'></td><td><input type ='text' id='gender"+a+"' placeholder='Passenger "+a+" Gender'></td><td><input type ='number' id='age"+a+"' placeholder='Passenger "+a+" age'></td>");
+                document.write("</tr>");
+                }
+        </script>
+        
+        </tbody></table> <input type='submit' value="Confirm" onclick="userdetail();" class='btn btn-primary'>
+  </div>
+  <script>
+    function userdetail(){
+      window.location.href="confirm.html";
+    }
+  </script>
+      <!--<img id="imgPreview" src="" alt="Preview">-->
+      <script>
+          function saveprofile()
+            {
+                var dob=document.getElementById("dob-name").value;
+                var phno=document.getElementById("phno-name").value;
+                var address=document.getElementById("address-text").value;
+                localStorage.setItem("dob", dob);
+                localStorage.setItem("phno", phno);
+                localStorage.setItem("address", address);
+                document.querySelector("#customFile").addEventListener("change", function(){
+                    const reader = new FileReader();
+
+                    reader.addEventListener("load", () => {
+                        localStorage.setItem("recent-image", reader.result);
+                    });
+                    reader.readAsDataURL(this.files[0]);
+                });
+                /*document.addEventListener("DOMContentLoaded", ()=>{
+                    const recentImageDataUrl = localStorage.getItem("recent-image");
+                    if (recentImageDataUrl){
+                        document.querySelector("#imgPreview").setAttribute("src",recentImageDataUrl);
+                    }
+                });*/
+                $('#myModal').modal('hide');
+            }
+            var logout = document.getElementById("logout");
+            logout.onclick = function(){
+              localStorage.removeItem("user");
+              localStorage.removeItem("password");
+              localStorage.removeItem("dob");
+              localStorage.removeItem("compartment");
+              localStorage.removeItem("pasenger-detail");
+              window.location.href = "index.html";
+            }
+      </script>
+</body>
+</html>
