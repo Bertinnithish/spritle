@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Railway Booking System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <style>
+        td{
+      width: 50px;
+      height: 30px;
+      border: 1em;
+      text-align: center;
+    }
+    h2{
+        font-family: 'Times New Roman', Times, serif;
+    }
+    td{
+      width: 50px;
+      height: 30px;
+      border: 1em;
+      text-align: center;
+    }
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 26px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+li a:hover:not(.active) {
+  color: #fff;
+  text-decoration: none;
+}
+    </style>
+</head>
+<body>
+    <ul class="bg-primary">
+        <li><a href="index.html">Railway Booking System</a></li>
+        <li style="margin-right: 20px; margin-top:15px; float:right"><button  id="logout" class="btn btn-light">logout</button></li>
+      </ul>
+    <center><h2>Confirm Booking</h2>
+    <table class="table-bordered mt-3">
+        <tbody>
+            <script language="javascript" type="text/javascript">
+                let cmpt = localStorage.getItem("compartment");
+                let passenger = localStorage.getItem("pasenger-detail");
+                var i;
+    var namee=[];
+    var age=[];
+    var gender=[];
+    var seat=[];
+    for (var a=1; a <= cmpt*6; a++)
+      {seat.push(a);}
+
+    var wseat=[];
+    for (var a=1; a <= cmpt*6; a++)
+      {
+        if(a%6==0 || a%6==1)
+        {wseat.push(a);}
+      }
+
+    var mseat=[];
+    for (var a=1; a <= cmpt*6; a++)
+      {
+        if(a%6==2 ||a%6==5 )
+        {mseat.push(a);}
+      }
+    
+    var aseat=[];
+    for (var a=1; a <= cmpt*6; a++)
+      {
+        if(a%6==3 ||a%6==4 )
+        {aseat.push(a);}
+      } 
+
+    for (i=0; i < passenger; i++) 
+        { 
+          namee=JSON.parse(localStorage.getItem("names"));
+          age=JSON.parse(localStorage.getItem("age"));
+          gender=JSON.parse(localStorage.getItem("gender"));   
+        }   
+    for (i=0; i < passenger; i++) 
+      {
+        if(age[i] > 60 && gender[i]=="male")
+        { 
+          wseat.shift();
+          if(wseat.length<=0)
+          {
+            i++;
+            mseat.shift();
+          }
+          else if(mseat.length<0)
+          {
+            aseat.shift();
+          } 
+        }
+        else if(age[i] > 60 && gender[i]=="female")
+        {
+          wseat.shift();
+          if(wseat.length<=0)
+          {
+            i++;
+            mseat.shift();
+          }
+          else if(mseat.length<0)
+          {
+            aseat.shift();
+          } 
+        }
+        else if(age[i] <= 60 && gender[i]=="male")
+        {
+          mseat.shift();
+          if(mseat.length<=0)
+          {
+            i+2;
+            aseat.shift();
+          }
+        }
+        else if(age[i] < 60 && gender[i]=="female")
+        {
+          mseat.shift();
+          if(mseat.length<=0)
+          {
+            i+2;
+            aseat.shift();
+          }
+        }
+      } 
+
+    var seatss=wseat.concat(mseat,aseat);
+    //console.log(seatss);
+
+    for (var a=1; a <= cmpt*6; a++)
+      { 
+        if(!seatss.includes(a))
+        {
+        document.write("<td style='background-color:#00FF00'>"+((a))+"</td>");
+        if(a%6==0)
+        {
+          document.write("</tr><tr>");
+        }
+        }   
+        else{  
+        document.write("<td>"+((a))+"</td>");
+        if(a%6==0)
+        {
+          document.write("</tr><tr>");
+        }
+      }
+      }
+      document.write("</tr>");
+                  </script>
+        </tbody>
+    </table>
+    </center>
+    <script>
+        var logout = document.getElementById("logout");
+            logout.onclick = function(){
+              localStorage.removeItem("user");
+              localStorage.removeItem("password");
+              localStorage.removeItem("dob");
+              localStorage.removeItem("compartment");
+              localStorage.removeItem("pasenger-detail");
+              window.location.href = "index.html";
+            }
+    </script>
+    <br>
+<div class="container">
+<table class="table" style="text-align: center;">
+  <thead class="bg-info">
+    <tr>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Gender</th>
+    </tr>
+  </thead>
+  <tbody>
+
+<script>
+  for (i=0; i < passenger; i++) 
+      { 
+        document.write("<tr>");
+        document.write("<div><td>"+namee[i]+"</td><td>"+age[i]+"</td><td>"+gender[i]+"</td></tr></div>");
+      }
+</script>
+  </tbody>
+</table>
+</div>
+</body>
+</html>

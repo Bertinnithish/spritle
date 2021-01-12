@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Railway Booking System</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <style>
+            /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+    -moz-appearance: textfield;
+    }
+    td{
+      width: 50px;
+      height: 30px;
+      border: 1em;
+      text-align: center;
+    }
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 26px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+li a:hover:not(.active) {
+  color: #fff;
+  text-decoration: none;
+}
+    </style>
+</head>
+
+<body style="background-color: azure;">
+    <ul class="bg-primary">
+        <li><a href="index.html">Railway Booking System</a></li>
+    </ul>
+    <div class="container mt-3">
+        <div class="d-flex justify-content-center row p-3">
+            <h2 class="d-flex justify-content-center">Login</h2>
+            <div class="col-md-2"></div>
+            <div class="col-md-8 p-3" style="background-color: white;">
+
+                    <div style="margin-left: 100px;" class="form mt-3">
+                        <input type="email" class="txtuser" autocomplete="off" name="InputEmail" id="InputEmail" required>
+                        <label for="InputEmail" class="label-name">
+                            <span class="content-name">Email Id</span>
+                        </label>
+                    </div><br>
+    
+                    <div style="margin-left: 100px;" class="form">
+                        <input type="password" class="txtpass" autocomplete="off" name="InputPassword" id="InputPassword" required>
+                        <label for="InputPassword" class="label-name">
+                            <span class="content-name">Password</span>
+                        </label>
+                    </div><br>
+                    <div>
+                        <button style="margin-left: 100px;" class="submit btn btn-primary">Login</button>
+                    </div>
+                    <p class="message pt-4 text-danger"></p>
+            </div>
+        </div> 
+    </div>
+    <script>
+        let txtuser = document.querySelector(".txtuser");
+        let txtpass = document.querySelector(".txtpass");
+        let submit = document.querySelector(".submit");
+
+        if(window.localStorage)
+        {
+            let user=localStorage.getItem("user");
+            let password=localStorage.getItem("password");
+
+            let message = document.querySelector(".message");
+            submit.addEventListener("click",()=>{
+                if(user == txtuser.value && password == txtpass.value){
+                    window.location.href = "setting.html";
+                }
+                else{
+                    message.innerHTML="The email id and Password does not matches";
+                }
+            }); 
+        }
+        else{
+            console.log("not Supported");
+        }
+        var logout = document.getElementById("logout");
+        logout.onclick = function(){
+          localStorage.removeItem("user");
+          localStorage.removeItem("password");
+          localStorage.removeItem("dob");
+          window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
